@@ -1,0 +1,20 @@
+pool:
+  name: macboock
+  demands: maven
+
+variables:
+  environment: ${{parameters.environment}}
+  worker: ${{parameters.worker}}
+  workerType: ${{parameters.workerType}}
+  app.runtime: ${{parameters.appRuntime}}
+  app.name: ${{parameters.appName}}
+  anypoint.username: ${{parameters.anypointUsername}}
+  anypoint.password: ${{parameters.anypointPassword}}
+
+steps:
+- task: Maven@3
+  displayName: 'Maven pom.xml'
+  inputs:
+    goals: deploy
+    options: '-DskipTests -DmuleDeploy -Denvironment=$(environment) -Dworker=$(worker) -DworkerType=$(workerType) -Dapp.runtime=$(app.runtime) -Dapp.name=$(app.name)  -Danypoint.username=$(anypoint.username) -Danypoint.password=$(anypoint.password)'
+    publishJUnitResults: false
